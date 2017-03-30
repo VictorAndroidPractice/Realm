@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath "io.realm:realm-gradle-plugin:0.88.3"
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'checkstyle'
+    task checkstyle(type: Checkstyle) {
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+        exclude '**/R.java'
+        exclude '**/BuildConfig.java'
+        configFile new File(rootDir, "checkstyle.xml")
+        // empty classpath
+        classpath = files()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
